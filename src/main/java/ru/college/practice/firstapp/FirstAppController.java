@@ -21,42 +21,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(produces = MediaType.TEXT_HTML_VALUE + ";charset=UTF-8")
 public class FirstAppController {
 
-    // ---------- 4.1–4.2. Главная, О сайте, Контакты ----------
-
-    /** path('', views.index) — только корень сайта. */
-    @GetMapping("/")
-    public String index() {
-        return "<h2>Главная</h2>";
-    }
-
-    /**
-     * re_path(r'^about', views.about) — любой адрес, начинающийся с /about:
-     * /about, /about/, /about/что-угодно.
-     * Шаблон {@code /**} — «ноль или больше сегментов пути».
-     */
-    @GetMapping("/about/**")
-    public String about() {
-        return "<h2>О сайте</h2>";
-    }
-
-    /** re_path(r'^contact', views.contact). */
-    @GetMapping("/contact/**")
-    public String contact() {
-        return "<h2>Контакты</h2>";
-    }
-
-    // ---------- 4.3. Очерёдность маршрутов ----------
-
-    /**
-     * re_path(r'^about/contact/', views.contact).
-     * В Django этот маршрут обязан стоять раньше '^about', иначе до него не дойдёт очередь.
-     * В Spring порядок объявления не важен: из подходящих шаблонов выбирается самый конкретный,
-     * поэтому /about/contact попадёт сюда, а не в {@link #about()}.
-     */
-    @GetMapping("/about/contact/**")
-    public String aboutContact() {
-        return contact();
-    }
+    // 4.1–4.3. Страницы Главная («/»), О сайте («/about/**») и Контакты («/contact/**»,
+    // «/about/contact/**») в практике 4 переведены на шаблоны Thymeleaf — так же, как в главе 5
+    // книги views.index/about/contact начинают возвращать HTML-шаблоны вместо строк.
+    // См. TemplatesController и WebConfig.
 
     // ---------- 4.4–4.5. Регулярные выражения и параметры представлений ----------
 

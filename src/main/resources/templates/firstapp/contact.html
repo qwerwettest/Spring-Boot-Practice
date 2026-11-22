@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<!-- Листинги 5.25 и 5.27: «Контакты» на основе базового шаблона, виды работ приходят из контроллера
+     (в Django — extra_context={"work": work} у TemplateView).
+     Заголовок страницы не передаётся ("_"), поэтому в <title> остаётся значение по умолчанию из base.html. -->
+<html lang="ru" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{firstapp/base :: layout(_, ~{::h1}, ~{::section})}">
+<body>
+    <h1>Контактные данные компании</h1>
+    <section>
+        <h2>"Интеллектуальные программные системы"</h2>
+        <h3>Адрес: г. Москва, ул. Короленко, д. 24</h3>
+        <p>Виды работ:</p>
+        <ul>
+            <li th:each="item : ${work}" th:text="${item}">вид работы</li>
+        </ul>
+        <h4>templates/firstapp/contact.html</h4>
+    </section>
+</body>
+</html>

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<!-- Листинг 5.32: базовый шаблон.
+     В Django блоки объявляются через {% block title %}...{% endblock %}, а страницы подключают
+     базовый шаблон через {% extends "firstapp/base.html" %}.
+     В Thymeleaf базовый шаблон — фрагмент с параметрами: страница передаёт в него свои
+     title, header и content, а он вставляет их на свои места (th:replace). -->
+<html lang="ru" xmlns:th="http://www.thymeleaf.org" th:fragment="layout(title, header, content)">
+<head>
+    <meta charset="UTF-8">
+    <!-- Если страница передала "_" (ничего не делать), остаётся значение по умолчанию «Заголовок» -->
+    <title th:replace="${title}">Заголовок</title>
+</head>
+<body>
+    <h1 th:replace="${header}"></h1>
+    <div th:replace="${content}"></div>
+    <div>Подвал страницы</div>
+</body>
+</html>

@@ -7,6 +7,11 @@
 (название как у приложения `firstapp` из книги), тесты —
 [`FirstAppRoutingTest.java`](../src/test/java/ru/college/practice/firstapp/FirstAppRoutingTest.java).
 
+> **Примечание.** В практике 4, как и в главе 5 книги, страницы **Главная** (`/`), **О сайте**
+> (`/about/**`) и **Контакты** (`/contact/**`, `/about/contact/**`) переведены со строк на шаблоны
+> Thymeleaf — см. [practice-4.md](practice-4.md). Их адреса и правила маршрутизации из этой практики
+> не изменились. Ниже код этих трёх страниц приведён в том виде, в каком он был в практике 3.
+
 ## Соответствие Django → Spring
 
 | Django (книга) | Spring Boot |

@@ -24,32 +24,12 @@ class FirstAppRoutingTest {
                 .andExpect(content().string(html));
     }
 
-    // 4.1–4.2
-
-    @Test
-    void mainPages() throws Exception {
-        expectHtml("/", "<h2>Главная</h2>");
-        expectHtml("/about", "<h2>О сайте</h2>");
-        expectHtml("/contact", "<h2>Контакты</h2>");
-    }
-
-    @Test
-    void aboutMatchesAnyPathStartingWithAbout() throws Exception {
-        // как re_path(r'^about'): и со слешем, и с продолжением
-        expectHtml("/about/", "<h2>О сайте</h2>");
-        expectHtml("/about/team", "<h2>О сайте</h2>");
-    }
+    // 4.1–4.3: страницы «/», «/about/**», «/contact/**» в практике 4 переведены на шаблоны —
+    // их маршруты проверяются в TemplatesTest.
 
     @Test
     void unknownPageIs404() throws Exception {
         mvc.perform(get("/abracadabra")).andExpect(status().isNotFound());
-    }
-
-    // 4.3
-
-    @Test
-    void moreSpecificRouteWins() throws Exception {
-        expectHtml("/about/contact/", "<h2>Контакты</h2>");
     }
 
     // 4.4–4.5

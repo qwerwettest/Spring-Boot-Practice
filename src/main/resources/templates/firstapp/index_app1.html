@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<!-- Листинг 5.9: ${header} и ${message} приходят из контроллера (в Django — {{ header }}, {{ message }}) -->
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Привет Spring!</title>
+</head>
+<body>
+    <h1 th:text="${header}">Заголовок</h1>
+    <p th:text="${message}">Сообщение</p>
+</body>
+</html>

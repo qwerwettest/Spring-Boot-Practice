@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<!-- Листинг 5.35: страница «О сайте» на основе того же базового шаблона -->
+<html lang="ru" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{firstapp/base :: layout(~{::title}, ~{::h1}, ~{::section})}">
+<head>
+    <title>about</title>
+</head>
+<body>
+    <h1>Сведения о компании</h1>
+    <section>
+        <p>"Интеллектуальные программные системы"</p>
+        <p>Связка шаблонов about.html и base.html</p>
+    </section>
+</body>
+</html>

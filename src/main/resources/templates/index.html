@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<!-- Листинги 5.11–5.12: передача в шаблон сложных данных -->
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Передача сложных данных</title>
+</head>
+<body>
+    <h1 th:text="${header}">Заголовок</h1>
+    <!-- объект: поля через точку, как user.name в Django -->
+    <p>Имя: <span th:text="${user.name}">имя</span> Age: <span th:text="${user.age}">0</span></p>
+    <!-- список: элементы по индексу, как address.0 в Django -->
+    <p>Адрес: ул. <span th:text="${address[0]}"></span>, д. <span th:text="${address[1]}"></span>,
+        кв. <span th:text="${address[2]}"></span></p>
+    <p>Владеет языками: <span th:text="${langs[0]}"></span>, <span th:text="${langs[1]}"></span></p>
+
+    <!-- Дополнительно: перебор всего списка, аналог {% for %} в Django -->
+    <p>Все языки:</p>
+    <ul>
+        <li th:each="lang : ${langs}" th:text="${lang}">язык</li>
+    </ul>
+</body>
+</html>

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<!-- 5.6.1. Вывод текущих даты и времени.
+     В Django: {% now "d.m.Y H:i" %}. В Thymeleaf — утилита #temporals:
+     createNow() берёт текущее время, format() форматирует по шаблону
+     (dd — день, MM — месяц, yyyy — год, HH — часы, mm — минуты, EEEE — день недели).
+     Язык названий (день недели по-русски) берётся из lang запроса; по умолчанию — из настроек сервера. -->
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Дата и время</title>
+</head>
+<body>
+    <h1>Текущие дата и время</h1>
+    <p>Дата: <span th:text="${#temporals.format(#temporals.createNow(), 'dd.MM.yyyy')}">01.01.2026</span></p>
+    <p>Время: <span th:text="${#temporals.format(#temporals.createNow(), 'HH:mm')}">00:00</span></p>
+    <p>День недели: <span th:text="${#temporals.dayOfWeekName(#temporals.createNow())}">понедельник</span></p>
+</body>
+</html>
