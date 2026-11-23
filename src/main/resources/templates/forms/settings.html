@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Форма Spring!</title>
+</head>
+<body>
+<!-- 6.4.1–6.4.4. Поля выводятся в порядке из списка ${order} — аналог field_order.
+     th:switch выбирает, какую строку таблицы нарисовать для очередного имени поля. -->
+<form th:action="@{/forms}" th:object="${form}" method="post">
+    <table>
+        <tr th:each="field : ${order}" th:switch="${field}">
+            <th:block th:case="'name'">
+                <th><label th:for="name">Имя:</label></th>
+                <td>
+                    <input type="text" th:field="*{name}"><br>
+                    <small>Введите ФИО</small>                        <!-- help_text -->
+                </td>
+            </th:block>
+            <th:block th:case="'age'">
+                <th><label th:for="age">Возраст:</label></th>
+                <td>
+                    <input type="number" th:field="*{age}"><br>
+                    <small>Введите возраст</small>                    <!-- help_text -->
+                </td>
+            </th:block>
+            <th:block th:case="'comment'">
+                <th><label th:for="comment">Комментарий:</label></th>
+                <!-- widget=forms.Textarea -->
+                <td><textarea th:field="*{comment}" rows="10" cols="40"></textarea></td>
+            </th:block>
+        </tr>
+    </table>
+    <input type="submit" value="Отправить">
+</form>
+<p>
+    Порядок полей: <span th:text="${#strings.listJoin(order, ', ')}">age, name, comment</span>.
+    <a th:href="@{/forms/settings(order='name,age,comment')}">Имя первым</a> |
+    <a th:href="@{/forms/settings}">Возраст первым</a>
+</p>
+<a th:href="@{/forms}">К списку примеров</a>
+</body>
+</html>

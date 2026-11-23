@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Проверка данных</title>
+    <style>
+        .field-error { border: 2px solid red; }
+        .error { color: red; }
+    </style>
+</head>
+<body>
+<h2>Проверка (валидация) данных</h2>
+<!-- novalidate отключает проверку в браузере, чтобы данные дошли до сервера
+     и было видно серверную проверку. -->
+<form th:action="@{/forms/validation}" th:object="${form}" method="post" novalidate>
+    <table>
+        <tr>
+            <th><label th:for="name">Имя:</label></th>
+            <td>
+                <!-- th:errorclass добавляет класс, только если у поля есть ошибка -->
+                <input type="text" th:field="*{name}" th:errorclass="field-error">
+                <span class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">ошибка</span>
+            </td>
+        </tr>
+        <tr>
+            <th><label th:for="age">Возраст:</label></th>
+            <td>
+                <input type="number" th:field="*{age}" th:errorclass="field-error">
+                <span class="error" th:if="${#fields.hasErrors('age')}" th:errors="*{age}">ошибка</span>
+            </td>
+        </tr>
+        <tr>
+            <th><label th:for="email">Электронный адрес:</label></th>
+            <td>
+                <input type="email" th:field="*{email}" th:errorclass="field-error">
+                <span class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">ошибка</span>
+            </td>
+        </tr>
+    </table>
+    <input type="submit" value="Отправить">
+</form>
+<p><a th:href="@{/forms}">К списку примеров</a></p>
+</body>
+</html>

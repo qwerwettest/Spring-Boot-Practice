@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Форма Spring!</title>
+</head>
+<body>
+<!-- 6.1–6.2: форма из листингов 6.4–6.5. В Django — {{ form }} внутри <table>,
+     здесь метки и поля размечены вручную. -->
+<form th:action="@{/forms}" th:object="${form}" method="post">
+    <table>
+        <tr>
+            <th><label th:for="name">Имя клиента:</label></th>
+            <td><input type="text" th:field="*{name}"></td>
+        </tr>
+        <tr>
+            <th><label th:for="age">Возраст клиента:</label></th>
+            <td><input type="number" th:field="*{age}"></td>
+        </tr>
+    </table>
+    <input type="submit" value="Отправить">
+</form>
+
+<h3>Другие примеры главы 6</h3>
+<ul>
+    <li><a th:href="@{/forms/fields}">6.3. Типы полей</a></li>
+    <li><a th:href="@{/forms/settings}">6.4.1–6.4.4. Настройка полей</a></li>
+    <li><a th:href="@{/forms/layout}">6.4.5. Вид формы: таблица, список, абзацы</a></li>
+    <li><a th:href="@{/forms/validation}">6.4.6. Валидация данных</a></li>
+</ul>
+</body>
+</html>

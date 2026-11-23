@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Форма Spring!</title>
+    <style>
+        section { border-bottom: 1px solid #ccc; padding: 4px 0 10px; }
+        h3 { margin: 8px 0; }
+        small { color: #555; }
+    </style>
+</head>
+<body>
+<h2>6.3. Типы полей в формах</h2>
+<p>Каждое поле — в своей форме, как в примерах книги. После нажатия «Отправить» видно,
+    что пришло на сервер и во что Spring превратил значение.</p>
+
+<!-- ===== 6.3.3. BooleanField ===== -->
+<section>
+    <h3>6.3.3. BooleanField — флажок (checkbox)</h3>
+    <!-- required=True (по умолчанию в Django): браузер не отправит форму без флажка (рис. 6.11) -->
+    <form th:action="@{/forms/fields}" th:object="${fields}" method="post">
+        <label>Положить товар в корзину: <input type="checkbox" th:field="*{basket}" required></label>
+        <input type="submit" value="Отправить">
+    </form>
+    <!-- required=False (листинг 6.11) -->
+    <form th:action="@{/forms/fields}" th:object="${fields}" method="post">
+        <label>Положить товар в корзину (необязательно): <input type="checkbox" th:field="*{basketOptional}"></label>
+        <input type="submit" value="Отправить">
+    </form>
+</section>
+
+<!-- ===== 6.3.4. NullBooleanField ===== -->
+<section>
+    <h3>6.3.4. NullBooleanField — Неизвестно / Да / Нет</h3>
+    <form th:action="@{/forms/fields}" th:object="${fields}" method="post">
+        <label th:for="vyb">Вы поедете в Сочи этим летом?</label>
+        <select th:field="*{vyb}">
+            <option value="">Неизвестно</option>
+            <option value="true">Да</option>
+            <option value="false">Нет</option>
+        </select>
+        <input type="submit" value="Отправить">
+    </form>
+</section>
+
+<!-- ===== 6.3.5. CharField ===== -->
+<section>
+    <h3>6.3.5. CharField — текст (max_length=15)</h3>
+    <form th:action="@{/forms/fields}" th:object="${fields}" method="post">
+        <label th:for="name">Имя клиента:</label>
+        <input type="text" th:field="*{name}" maxlength="15" required>
+        <small>ФИО не более 15 символов</small>
+        <input type="submit" value="Отправить">
+    </form>
+</section>
+
+<!-- ===== 6.3.6. EmailField ===== -->
+<section>
+    <h3>6.3.6. EmailField — электронный адрес</h3>
+    <form th:action="@{/forms/fields}" th:object="${fields}" method="post">
+        <label th:for="email">Электронный адрес:</label>
+        <input type="email" th:field="*{email}" required>
+        <small>Обязательный символ - @</small>
+        <input type="submit" value="Отправить">
+    </form>
+</section>
+
+<!-- ===== 6.3.7. GenericIPAddressField ===== -->
+<section>
+    <h3>6.3.7. GenericIPAddressField — IP-адрес</h3>
+    <form th:action="@{/forms/fields}" th:object="${fields}" method="post">
+        <label th:for="ipAdres">IP адрес:</label>
+        <input type="text" th:field="*{ipAdres}" required
+               pattern="((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)\.){3}(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)">
+        <small>Пример формата 192.0.2.0</small>
+        <input type="submit" value="Отправить">
+    </form>
+</section>
+
+<!-- ===== 6.3.8. RegexField ===== -->
+<section>
+    <h3>6.3.8. RegexField — текст по регулярному выражению ^[0-9][A-F][0-9]$</h3>
+    <form th:action="@{/forms/fields}" th:object="${fields}" method="post">
+        <label th:for="regText">Текст:</label>
+        <!-- в pattern ^ и $ не пишутся: он всегда сравнивается со всей строкой -->
+        <input type="text" th:field="*{regText}" pattern="[0-9][A-F][0-9]" required>
+        <small>Например, 1A2</small>
+        <input type="submit" value="Отправить">
+    </form>
+</section>
+
+<!-- ===== 6.3.9. SlugField ===== -->
+<section>
+    <h3>6.3.9. SlugField — буквы, цифры, дефис, подчёркивание</h3>
+    <form th:action="@{/forms/fields}" th:object="${fields}" method="post">
+        <label th:for="slugText">Введите текст:</label>
+        <input type="text" th:field="*{slugText}" pattern="[-a-zA-Z0-9_]+" required>
+        <input type="submit" value="Отправить">
+    </form>
+</section>
+
+<!-- ===== 6.3.10. URLField ===== -->
+<section>
+    <h3>6.3.10. URLField — адрес URL</h3>
+    <form th:action="@{/forms/fields}" th:object="${fields}" method="post">
+        <label th:for="urlText">Введите URL:</label>
+        <input type="url" th:field="*{urlText}" required>
+        <small>Например http://www.google.com</small>
+        <input type="submit" value="Отправить">
+    </form>
+</section>
+
+<!-- ===== 6.3.11. UUIDField ===== -->
+<section>
+    <h3>6.3.11. UUIDField — универсальный уникальный идентификатор</h3>
+    <!-- проверки в браузере нет: неверный формат отловит сервер при преобразовании в java.util.UUID -->
+    <form th:action="@{/forms/fields}" th:object="${fields}" method="post">
+        <label th:for="uuidText">Введите UUID:</label>
+        <input type="text" th:field="*{uuidText}" size="40" required>
+        <small>Формат xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</small>
+        <input type="submit" value="Отправить">
+    </form>
+</section>
+
+<!-- ===== 6.3.12. ComboField ===== -->
+<section>
+    <h3>6.3.12. ComboField — URL не длиннее 20 символов</h3>
+    <!-- ComboField(fields=[CharField(max_length=20), URLField()]): правила двух полей сразу -->
+    <form th:action="@{/forms/fields}" th:object="${fields}" method="post">
+        <label th:for="comboText">Введите URL:</label>
+        <input type="url" th:field="*{comboText}" maxlength="20" required>
+        <input type="submit" value="Отправить">
+    </form>
+</section>
+
+<!-- ===== 6.3.13. FilePathField ===== -->
+<section>
+    <h3>6.3.13. FilePathField — выбор из списка файлов каталога</h3>
+    <form th:action="@{/forms/fields}" th:object="${fields}" method="post">
+        <label th:for="filePath">Выберите файл:</label>
+        <select th:field="*{filePath}">
+            <option th:each="f : ${files}" th:value="${f}" th:text="${f}">файл</option>
+        </select>
+        <input type="submit" value="Отправить">
+    </form>
+</section>
+
+<!-- ===== 6.3.14–6.3.15. FileField, ImageField ===== -->
+<section>
+    <h3>6.3.14. FileField — выбор и загрузка файла</h3>
+    <!-- для файлов форма обязательно отправляется как multipart/form-data -->
+    <form th:action="@{/forms/fields}" method="post" enctype="multipart/form-data">
+        <label for="file">Файл:</label>
+        <input type="file" id="file" name="file" required>
+        <input type="submit" value="Отправить">
+    </form>
+    <h3>6.3.15. ImageField — выбор изображения</h3>
+    <form th:action="@{/forms/fields}" method="post" enctype="multipart/form-data">
+        <label for="image">Изображение:</label>
+        <input type="file" id="image" name="image" accept="image/*" required>
+        <input type="submit" value="Отправить">
+    </form>
+</section>
+
+<!-- ===== 6.3.16–6.3.20. Дата и время ===== -->
+<section>
+    <h3>6.3.16. DateField — дата</h3>
+    <form th:action="@{/forms/fields}" th:object="${fields}" method="post">
+        <label th:for="date">Введите дату:</label>
+        <input type="date" th:field="*{date}" required>
+        <input type="submit" value="Отправить">
+    </form>
+
+    <h3>6.3.17. TimeField — время</h3>
+    <form th:action="@{/forms/fields}" th:object="${fields}" method="post">
+        <label th:for="time">Введите время:</label>
+        <input type="time" th:field="*{time}" step="1" required>
+        <input type="submit" value="Отправить">
+    </form>
+
+    <h3>6.3.18. DateTimeField — дата и время</h3>
+    <form th:action="@{/forms/fields}" th:object="${fields}" method="post">
+        <label th:for="dateTime">Введите дату и время:</label>
+        <input type="datetime-local" th:field="*{dateTime}" required>
+        <input type="submit" value="Отправить">
+    </form>
+
+    <h3>6.3.19. DurationField — промежуток времени</h3>
+    <form th:action="@{/forms/fields}" th:object="${fields}" method="post">
+        <label th:for="duration">Продолжительность:</label>
+        <input type="text" th:field="*{duration}" pattern="\d+ \d{1,2}:\d{2}:\d{2}" required>
+        <small>Формат DD HH:MM:SS, например 2 1:10:20</small>
+        <input type="submit" value="Отправить">
+    </form>
+
+    <h3>6.3.20. SplitDateTimeField — дата и время в двух полях</h3>
+    <form th:action="@{/forms/fields}" th:object="${fields}" method="post">
+        <label th:for="splitDate">Введите дату и время:</label>
+        <input type="date" th:field="*{splitDate}" required>
+        <input type="time" th:field="*{splitTime}" required>
+        <input type="submit" value="Отправить">
+    </form>
+</section>
+
+<!-- ===== 6.3.21–6.3.23. Числа ===== -->
+<section>
+    <h3>6.3.21. IntegerField — целое число</h3>
+    <form th:action="@{/forms/fields}" th:object="${fields}" method="post">
+        <label th:for="num">Введите целое число:</label>
+        <input type="number" th:field="*{num}" required>
+        <input type="submit" value="Отправить">
+    </form>
+
+    <h3>6.3.22. DecimalField — десятичное число (decimal_places=2)</h3>
+    <form th:action="@{/forms/fields}" th:object="${fields}" method="post">
+        <label th:for="decimalNum">Введите десятичное число:</label>
+        <input type="number" th:field="*{decimalNum}" step="0.01" required>
+        <input type="submit" value="Отправить">
+    </form>
+
+    <h3>6.3.23. FloatField — число с плавающей точкой</h3>
+    <form th:action="@{/forms/fields}" th:object="${fields}" method="post">
+        <label th:for="floatNum">Введите число:</label>
+        <input type="number" th:field="*{floatNum}" step="any" required>
+        <input type="submit" value="Отправить">
+    </form>
+</section>
+
+<!-- ===== 6.3.24–6.3.27. Выбор из списка ===== -->
+<section>
+    <h3>6.3.24. ChoiceField — выбор из списка</h3>
+    <form th:action="@{/forms/fields}" th:object="${fields}" method="post">
+        <label th:for="ling">Выберите язык:</label>
+        <select th:field="*{ling}">
+            <option th:each="e : ${languages}" th:value="${e.key}" th:text="${e.value}">язык</option>
+        </select>
+        <input type="submit" value="Отправить">
+    </form>
+
+    <h3>6.3.25. TypedChoiceField — выбор с приведением к числу (coerce=int)</h3>
+    <form th:action="@{/forms/fields}" th:object="${fields}" method="post">
+        <label th:for="typedLing">Выберите язык:</label>
+        <select th:field="*{typedLing}">
+            <option th:each="e : ${languages}" th:value="${e.key}" th:text="${e.value}">язык</option>
+        </select>
+        <input type="submit" value="Отправить">
+    </form>
+
+    <h3>6.3.26. MultipleChoiceField — выбор нескольких элементов</h3>
+    <form th:action="@{/forms/fields}" th:object="${fields}" method="post">
+        <label th:for="lings">Выберите языки (Ctrl + щелчок):</label>
+        <select th:field="*{lings}" multiple size="3" required>
+            <option th:each="e : ${languages}" th:value="${e.key}" th:text="${e.value}">язык</option>
+        </select>
+        <input type="submit" value="Отправить">
+    </form>
+
+    <h3>6.3.27. TypedMultipleChoiceField — несколько городов (листинг 6.37)</h3>
+    <form th:action="@{/forms/fields}" th:object="${fields}" method="post">
+        <label th:for="cities">Выберите город:</label>
+        <select th:field="*{cities}" multiple size="4" required>
+            <option th:each="e : ${cities}" th:value="${e.key}" th:text="${e.value}">город</option>
+        </select>
+        <input type="submit" value="Отправить">
+    </form>
+</section>
+
+<p><a th:href="@{/forms}">К списку примеров</a></p>
+</body>
+</html>

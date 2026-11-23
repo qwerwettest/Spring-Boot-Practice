@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Форма Spring!</title>
+</head>
+<body>
+<!-- 6.4.5. В Django — {{ form.as_table }}, {{ form.as_ul }}, {{ form.as_p }}.
+     В Thymeleaf готовых генераторов нет, поэтому три разметки написаны вручную.
+     Как и в Django (одинаковые auto_id), id полей в трёх формах совпадают. -->
+
+<h2>Форма как таблица</h2>
+<form th:action="@{/forms}" th:object="${form}" method="post">
+    <table>
+        <tr>
+            <th><label th:for="name">Имя:</label></th>
+            <td><input type="text" th:field="*{name}"></td>
+        </tr>
+        <tr>
+            <th><label th:for="age">Возраст:</label></th>
+            <td><input type="number" th:field="*{age}"></td>
+        </tr>
+    </table>
+    <input type="submit" value="Отправить">
+</form>
+
+<h2>Форма как список</h2>
+<form th:action="@{/forms}" th:object="${form}" method="post">
+    <ul>
+        <li><label th:for="name">Имя:</label> <input type="text" th:field="*{name}"></li>
+        <li><label th:for="age">Возраст:</label> <input type="number" th:field="*{age}"></li>
+    </ul>
+    <input type="submit" value="Отправить">
+</form>
+
+<h2>Форма как параграф</h2>
+<form th:action="@{/forms}" th:object="${form}" method="post">
+    <div>
+        <p><label th:for="name">Имя:</label> <input type="text" th:field="*{name}"></p>
+        <p><label th:for="age">Возраст:</label> <input type="number" th:field="*{age}"></p>
+    </div>
+    <input type="submit" value="Отправить">
+</form>
+
+<p><a th:href="@{/forms}">К списку примеров</a></p>
+</body>
+</html>

@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Данные приняты</title>
+</head>
+<body>
+<h2>Данные прошли проверку</h2>
+<h3 th:text="|Имя - ${form.name}, Возраст - ${form.age}, Email - ${form.email}|">данные</h3>
+<a th:href="@{/forms/validation}">Назад к форме</a>
+</body>
+</html>

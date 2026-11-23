@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Имя и возраст пользователя</title>
+</head>
+<body>
+<!-- Рис. 6.9. Объект формы лежит в модели под именем "form" (так его назвал @ModelAttribute("form")),
+     поэтому поля берутся как ${form.name}. Текст и выражение склеиваются через |...|. -->
+<h2>Пользователь</h2>
+<h3 th:text="|Имя - ${form.name}, Возраст - ${form.age}|">Имя - ..., Возраст - ...</h3>
+<p th:if="${form.comment}" th:text="|Комментарий: ${form.comment}|">Комментарий</p>
+<a th:href="@{/forms}">Назад к форме</a>
+</body>
+</html>

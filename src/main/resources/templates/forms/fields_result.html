@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Данные формы</title>
+    <style>
+        td, th { border: 1px solid #999; padding: 4px 8px; text-align: left; }
+        table { border-collapse: collapse; }
+        .error { color: red; }
+    </style>
+</head>
+<body>
+<h2>Получено сервером</h2>
+
+<!-- ошибки преобразования: например, строка не подошла под формат UUID или даты -->
+<div th:unless="${#lists.isEmpty(errors)}">
+    <p class="error" th:each="e : ${errors}" th:text="${e}">ошибка</p>
+</div>
+
+<table th:unless="${#maps.isEmpty(values)}">
+    <tr><th>Поле</th><th>Значение</th><th>Тип в Java</th></tr>
+    <tr th:each="v : ${values}">
+        <td th:text="${v.key}">поле</td>
+        <td th:text="${v.value}">значение</td>
+        <td th:text="${v.value.class.simpleName}">тип</td>
+    </tr>
+</table>
+<p th:if="${#maps.isEmpty(values) and #lists.isEmpty(errors)}">Ни одно поле не заполнено.</p>
+
+<p><a th:href="@{/forms/fields}">Назад к полям</a></p>
+</body>
+</html>
