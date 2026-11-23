@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Форма отправлена</title>
+</head>
+<body>
+<!-- name приходит flash-атрибутом после redirect. Если обновить страницу, его уже не будет:
+     flash-атрибуты живут только до следующего запроса. -->
+<h2 th:if="${name}" th:text="|Форма отправлена. Здравствуйте, ${name}!|">Форма отправлена</h2>
+<h2 th:unless="${name}">Нет данных формы: страница открыта не после отправки формы</h2>
+<a th:href="@{/buttons}"><button type="button">Назад</button></a>
+</body>
+</html>

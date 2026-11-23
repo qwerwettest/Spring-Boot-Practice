@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Формы с кнопками</title>
+    <style>
+        section { border-bottom: 1px solid #ccc; padding-bottom: 12px; }
+        #message, #server-answer { color: green; font-weight: bold; }
+    </style>
+</head>
+<body>
+<h1>Формы с кнопками</h1>
+
+<!-- 1. Кнопка для отправки формы -->
+<section>
+    <h2>1. Кнопка для отправки формы</h2>
+    <!-- th:action вместо action: если подключить Spring Security, Thymeleaf сам добавит
+         скрытое поле с CSRF-токеном — аналог {% csrf_token %} -->
+    <form method="post" th:action="@{/buttons}">
+        <label for="name">Ваше имя:</label>
+        <input type="text" id="name" name="name">
+        <!-- две submit-кнопки: сервер различает их по значению параметра action -->
+        <button type="submit" name="action" value="send">Отправить</button>
+        <button type="submit" name="action" value="clear">Очистить</button>
+    </form>
+</section>
+
+<!-- 2. Кнопки без отправки формы: обработчик на JavaScript -->
+<section>
+    <h2>2. Кнопка без отправки формы (JavaScript)</h2>
+    <button type="button" onclick="myJavaScriptFunction()">Нажми меня</button>
+    <span id="message"></span>
+    <p>
+        <!-- JS-функция отправляет запрос на отдельный адрес, который обрабатывает контроллер -->
+        <button type="button" onclick="askServer()">Спросить сервер</button>
+        <span id="server-answer"></span>
+    </p>
+</section>
+
+<!-- 3. Кнопка без формы — переход на другую страницу -->
+<section>
+    <h2>3. Кнопка-ссылка</h2>
+    <a th:href="@{/buttons/about}">
+        <button type="button">Перейти</button>
+    </a>
+</section>
+
+<script>
+    // Работает только в браузере, сервер в этом не участвует
+    function myJavaScriptFunction() {
+        document.getElementById("message").textContent =
+            "Кнопка нажата в " + new Date().toLocaleTimeString();
+    }
+
+    // Запрос на сервер без перезагрузки страницы: POST /buttons/click → JSON
+    async function askServer() {
+        const response = await fetch("/buttons/click", {method: "POST"});
+        const data = await response.json();
+        document.getElementById("server-answer").textContent =
+            "Сервер: нажатий " + data.clicks + ", время " + data.time;
+    }
+</script>
+</body>
+</html>

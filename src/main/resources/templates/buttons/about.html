@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Другая страница</title>
+</head>
+<body>
+<h2>Вы перешли по кнопке-ссылке</h2>
+<p>Это обычный GET-запрос: кнопка лежит внутри ссылки &lt;a href="/buttons/about"&gt;.</p>
+<p th:text="|Кнопку «Спросить сервер» нажали ${clicks} раз(а).|">Нажатий: 0</p>
+<a th:href="@{/buttons}"><button type="button">Назад</button></a>
+</body>
+</html>
